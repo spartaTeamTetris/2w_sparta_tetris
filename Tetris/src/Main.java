@@ -3,7 +3,11 @@
 public class Main {
 	public static void main(String[] args) {
 
-		HotelApp.hotelApp();
+//		HotelApp.hotelApp();
+
+		HotelApp app = new HotelApp();
+		app.hotelApp();
+
 
 	}
 }

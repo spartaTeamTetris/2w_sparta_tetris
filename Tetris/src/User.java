@@ -2,7 +2,7 @@ public class User {
 
 	private String userName;
 	private String phoneNumber;
-	int Money;
+	private int Money;
 
 	public User (String userName1, String phoneNumber1, int Money1) {
 		this.userName = userName1;
@@ -32,9 +32,7 @@ public class User {
 		this.phoneNumber = phoneNumber1;
 	}
 
-	public int getMoney() {
-		return Money;
-	}
+	public int getMoney() {	return Money; }
 
 	public void setMoney(int money1) {
 		Money = money1;

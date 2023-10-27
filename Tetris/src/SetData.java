@@ -12,7 +12,7 @@ public class SetData {
 		setUser("징징이", "5438555", 5000000);
 
 		setRoom(101, 50000, RoomType.SINGLE);
-		setRoom( 102, 100000, RoomType.DOUBLE);
+		setRoom( 202, 100000, RoomType.DOUBLE);
 		setRoom(103, 300000,RoomType.SUITE);
 	}
 
@@ -21,15 +21,12 @@ public class SetData {
 		userArrayList.add(user);
 	}
 
-	public void setRoom(int roomNum1, int roomPrice1, RoomType roomType1) {
-		Room room = new Room(roomNum1,roomPrice1,roomType1);
+	public void setRoom(int roomfloor1, int roomNum1, int roomPrice1, RoomType roomType1) {
+		Room room = new Room(roomfloor1,roomNum1,roomPrice1,roomType1);
 		roomArrayList.add(room);
 	}
+	public List<Room> getRooms() { return roomArrayList; }
 	public List<User> getUsers() {
 		return userArrayList;
-	}
-
-	public List<Room> getRooms() {
-		return roomArrayList;
 	}
 }
