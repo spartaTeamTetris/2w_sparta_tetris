@@ -1,18 +1,10 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 import java.util.jar.JarEntry;
 
 public class HotelApp {
-
 	private final Scanner scanner = new Scanner(System.in);
 	private final Hotel hotel = new Hotel();
-
-
-
-
 
 	public void hotelApp() {
 		while (true) {
@@ -41,24 +33,24 @@ public class HotelApp {
 	}
 
 	private void getMyReservation() {
-		// 예약 번호를 받고 예약 번호를 메서드에 전달해서 uuid랑 일치하는 book 객체를 찾아서 예약 내역을 반환
-		// 예약 번호는 숫자만 됨(int bookedNum;)
 		System.out.println("[ 예약 정보 ]");
 		System.out.println("예약 번호를 입력해주세요 : " );
-		String bookedNum = scanner.nextLine(); // 예약 번호 받기
+		String bookedNum = scanner.nextLine();
 
-		System.out.print("예약 날짜를 입력해주세요(ex 2023-10-10) : ");
-		String date = scanner.nextLine(); // 예약 날짜 받기
+		// 아래 코드에서 inputStringToDate()를 사용하면 예약 번호 입력이 되지 않는 문제 발생.
+		// 다른 scanner 객체를 이용해서 그런가..
+//		System.out.print("예약 날짜를 입력해주세요(ex 2023-10-10) : ");
+//		String date = scanner.nextLine();
+		Date date = Functions.inputStringToDate();
 
-		System.out.println("[ 예약 내역 ]\n" + hotel.getBookWithUUID(date, bookedNum));
-		// 사용자가 입력한 예약 번호(bookedNum=파라미터)를 getBookWithUUID 메서드로 전달해서
-		// UUID와 일치하는 book 객체를 찾아서 반환한다.
-		// book 객체 를 받아와서.. 어쩌구저쩌구 get을 사용해서 book.getUsername
+		Book findBook = hotel.getBookWithUUID(date, bookedNum);
+		if(findBook == null) {
+			System.out.println("일치하는 예약 정보가 없습니다.");
+			return;
+		}
 
-		// 1. hotel.getBookWithUUID() 함수를 이용해서 Book객체를 받아온다.
-		// 2. 받아온 Book 객체에서 getter를 이용해 출력에 필요한 정보를 저장한다.
-		// 3. [예약내역]으로 출력되는 아래줄에 유저에게 제공해야할 정보를 출력한다.
-		// 4. 다음 마지막으로, select 로직을 구현한다.
+		System.out.println("[ 예약 내역 ]");
+		//TODO
 
 		int select = makeSelect(
 				1,
@@ -68,7 +60,10 @@ public class HotelApp {
 		);
 
 		if(select == 1) return;
-//		if(select == 2) Hotel.cancelBook(); // uuid를 전달해줘야 합니다. -> 어떻게 전달해줘요...? -> cancelBook에서 요구하는 매개변수를 한 번 보고 오심 좋아요
+		if(select == 2) {
+			if(hotel.cancelBook(date, bookedNum)) System.out.println("예약이 취소되었습니다.");
+			else System.out.println("예약을 취소하지 못했습니다. 다시 시도해주세요.");
+		}
 	}
 
 	private void adminScreen() {

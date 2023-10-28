@@ -4,33 +4,15 @@ public class Hotel {
 
 	private List<Room> rooms; //*
 
-
-
 	final SetData setData;
 	final String name = "데일리 여기 어떤 비앤비 ~ ?";
 
 	// 예약 배열
-	static Map<Date, Book[][]> bookArray = new HashMap<>();
-	private
-
+	private final Map<Date, Book[][]> bookArray = new HashMap<>();
 
 	// 총 5층 , 층마다 5개의 방
 	final int roomFloor = 5;
 	final int roomNum = 5;
-
-	/*
-	* Book이나 Room 객체 안에 Date를 넣는다.
-	* 이 Date를 어떻게 저장하나요??
-	* Room room -> room.setDate(date);
-	*
-	* 조회시점
-	* readBook(date)
-	* for
-	* */
-	//
-
-
-//	Map<Date, > book
 
 	public Hotel() {
 		setData = new SetData();
@@ -41,56 +23,44 @@ public class Hotel {
 		return setData.getRooms();
 	}
 
-	public Book getBookWithUUID(String date, String uuid) {
-		//1. 전달받은 data를 혁님, 민성님이 정해놓은 Date format에 맞춰 Date 객체로 변환한다. 힌트 없음 ㅋㅋ
-		Date convertDate = Functions.inputStringToDate();
+	public Book getBookWithUUID(Date date, String uuid) {
+		Book[][] findBooks = bookArray.get(date);
+		int[] idx = findBook(uuid, findBooks);
 
-
-		//2. 전달받은 uuid를 UUID 객체로 변환한다. hint -> UUID.fromString을 이용
-		UUID uuid1 = UUID.fromString(uuid);
-
-
-		//3. 변환한 Date를 key값으로 이용해 bookArray에 접근한다. hint -> bookArray.get() 함수를 이용
-		for (Map.Entry<Date, Book[][]> books : bookArray.entrySet()) {
-			// bookArray 의 모든 Key-Value를 가져와서 반복한다. entrySet()은 Key-Value 쌍을 담고 있는 Set 을 반환한다.
-
-			Book[][] book1 = books.getValue();
-
-			for (int i = 0; i < book1.length; i++) {
-				for (int j = 0; j < book1[i].length; j++) {
-					Book book = book1[i][j];
-
-					//4. 변환한 UUID 값으로 접근한 Book[][] 배열에서 UUID값과 일치하는 Book객체를 찾는다.
-					if (book.equals(uuid1)) {
-
-						//5. 일치하는 Book 객체가 있다면 반복문을 중단하고 해당 객체를 return 한다.
-						return book;
-					}
-				}
-			}
-		}
-		return null;
+		if(idx == null) return null;
+		else return findBooks[idx[0]][idx[1]];
 	}
 
-	public boolean cancelBook(String date, String uuid) {
-		//1. 전달받은 date와 uuid는 getBookWithUUID() 함수와 마찬가지로 변환 해주셔야 해요
-		Date convertDate2 = Functions.inputStringToDate();
-		UUID uuid2 = UUID.fromString(uuid);
+	public boolean cancelBook(Date date, String uuid) {
+		Book[][] findBooks = bookArray.get(date);
 
-		//2. 또, 마찬가지로 해당하는 Book객체를 반복문을 이용해서 찾으시면 됩니다.
-		for (Map.Entry<Date, Book[][]> books : bookArray.entrySet()) {
-			Book[][] book2 = books.getValue();
-			for (int i = 0; i < book2.length; i++) {
-				for (int j = 0; j < book2[i].length; j++) {
-					Book book = book2[i][j];
+		int[] idx = findBook(uuid, findBooks);
+		if(idx == null) return false;
+		else findBooks[idx[0]][idx[1]] = null;
 
-					if (book.equals(uuid2)) {
-						book2 = null;
-						return true;
-					} else return false; // if (!=book.equals(uuid2))
+		return true;
+	}
+
+	private int[] findBook(String uuid, Book[][] findBooks) {
+		UUID code;
+		try {
+			code = UUID.fromString(uuid);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+
+		for(int i=0; i<findBooks.length; i++) {
+			for (int j=0; j<findBooks[i].length; j++) {
+				if(findBooks[i][j].getUUID().equals(code)) {
+					int[] idx = new int[2];
+					idx[0] = i;
+					idx[1] = j;
+					return idx;
+
 				}
 			}
 		}
-		return false;
+
+		return null;
 	}
 }

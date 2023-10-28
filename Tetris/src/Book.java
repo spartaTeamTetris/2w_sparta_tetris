@@ -3,21 +3,23 @@ import java.util.UUID;
 
 public class Book {
 
-	String name;
-	String bookedPhoneNum;
-	Date date;
-	int roomNum;
-	UUID uuid;
-
-	int bookedNum;
+	private String name;
+	private String bookedPhoneNum;
+	private Date date;
+	private int roomNum;
+	private UUID uuid;
+	private int bookedNum;
 
 	public Book (String name1, String bookedPhoneNum1, int roomNum1, int bookedNum1) {
 		this.name = name1;
 		this.bookedPhoneNum = bookedPhoneNum1;
 		this.roomNum = roomNum1;
 		this.bookedNum = bookedNum1;
-
  		this.uuid = UUID.randomUUID();
+	}
+
+	public UUID getUUID() {
+		return this.uuid;
 	}
 
 	public String phone_format() {
@@ -28,5 +30,4 @@ public class Book {
 	public String uuidToString (UUID uuid1) {
 		return uuid1.toString();
 	}
-
 }
