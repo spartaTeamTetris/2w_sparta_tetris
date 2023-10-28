@@ -74,19 +74,23 @@ public class Hotel {
 
 	public boolean cancelBook(String date, String uuid) {
 		//1. 전달받은 date와 uuid는 getBookWithUUID() 함수와 마찬가지로 변환 해주셔야 해요
+		Date convertDate2 = Functions.inputStringToDate();
+		UUID uuid2 = UUID.fromString(uuid);
+
 		//2. 또, 마찬가지로 해당하는 Book객체를 반복문을 이용해서 찾으시면 됩니다.
-		//3. 조건에 맞는 Book 객체가 있다면 그 값을 null로 바꿔주시면 돼요 findBook = null; 이렇게
-		//4. 조건에 맞는 Book 객체를 정상적으로 찾아서 삭제했다면 true를 return하고
-		//5. 그럴 일은 없겠지만, 과정 중 문제가 발생했다면(ex) 해당 날짜에 조건과 일치하는Book이 없다) false를 return 해주시면 됩니다.
-		//화이팅 하세요 유진님!
-		// 감사합니다 팀장님 퇴근하셔도 됩니다!
+		for (Map.Entry<Date, Book[][]> books : bookArray.entrySet()) {
+			Book[][] book2 = books.getValue();
+			for (int i = 0; i < book2.length; i++) {
+				for (int j = 0; j < book2[i].length; j++) {
+					Book book = book2[i][j];
+
+					if (book.equals(uuid2)) {
+						book2 = null;
+						return true;
+					} else return false; // if (!=book.equals(uuid2))
+				}
+			}
+		}
 		return false;
 	}
-
-
-
-
-
-
-
 }
