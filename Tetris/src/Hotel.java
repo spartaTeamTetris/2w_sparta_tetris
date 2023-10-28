@@ -43,12 +43,32 @@ public class Hotel {
 
 	public Book getBookWithUUID(String date, String uuid) {
 		//1. 전달받은 data를 혁님, 민성님이 정해놓은 Date format에 맞춰 Date 객체로 변환한다. 힌트 없음 ㅋㅋ
-		//2. 전달받은 uuid를 UUID 객체로 변환한다. hint -> UUID.fromString을 이용
-		//3. 변환한 Date를 key값으로 이용해 bookArray에 접근한다. hint -> bookArray.get() 함수를 이용
-		//4. 변환한 UUID 값으로 접근한 Book[][] 배열에서 UUID값과 일치하는 Book객체를 찾는다.
-		//5. 일치하는 Book 객체가 있다면 반복문을 중단하고 해당 객체를 return 한다.
+		Date convertDate = Functions.inputStringToDate();
 
-		//return null은 임시로 넣어놓은거에요 유진님. 조건에 맞는 Book객체를 찾아서 그걸 return 하셔야 합니다. ㅇㅋ? 네 팀장님!
+
+		//2. 전달받은 uuid를 UUID 객체로 변환한다. hint -> UUID.fromString을 이용
+		UUID uuid1 = UUID.fromString(uuid);
+
+
+		//3. 변환한 Date를 key값으로 이용해 bookArray에 접근한다. hint -> bookArray.get() 함수를 이용
+		for (Map.Entry<Date, Book[][]> books : bookArray.entrySet()) {
+			// bookArray 의 모든 Key-Value를 가져와서 반복한다. entrySet()은 Key-Value 쌍을 담고 있는 Set 을 반환한다.
+
+			Book[][] book1 = books.getValue();
+
+			for (int i = 0; i < book1.length; i++) {
+				for (int j = 0; j < book1[i].length; j++) {
+					Book book = book1[i][j];
+
+					//4. 변환한 UUID 값으로 접근한 Book[][] 배열에서 UUID값과 일치하는 Book객체를 찾는다.
+					if (book.equals(uuid1)) {
+
+						//5. 일치하는 Book 객체가 있다면 반복문을 중단하고 해당 객체를 return 한다.
+						return book;
+					}
+				}
+			}
+		}
 		return null;
 	}
 
