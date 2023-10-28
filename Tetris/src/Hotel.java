@@ -38,6 +38,7 @@ public class Hotel {
 		if(idx == null) return false;
 		else findBooks[idx[0]][idx[1]] = null;
 
+		//
 		return true;
 	}
 
