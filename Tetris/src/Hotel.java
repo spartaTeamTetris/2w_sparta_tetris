@@ -1,8 +1,14 @@
 import java.util.*;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class Hotel {
 
 	private List<Room> rooms; //*
+
+	Book book;
+
+
 
 	final SetData setData;
 	final String name = "데일리 여기 어떤 비앤비 ~ ?";
