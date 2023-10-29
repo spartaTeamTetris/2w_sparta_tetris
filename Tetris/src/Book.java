@@ -2,20 +2,12 @@ import java.security.PublicKey;
 import java.util.*;
 
 public class Book {
-
-
 	String userName;
 	String bookedPhoneNum;
-
 	int roomNum;
-
 	Date date;
-
 	Room room;
-
 	UUID uuid;
-
-
 
 	private static List<Book> bookList = new ArrayList<>();
 
@@ -27,7 +19,6 @@ public class Book {
 
 
 	public Book (String bookedPhoneNum1, String userName1, int roomNum1, Date date1) {
-
 		this.userName = userName1;
 		this.bookedPhoneNum = bookedPhoneNum1;
 		this.roomNum = roomNum1;
@@ -35,7 +26,6 @@ public class Book {
 		this.date = date1;
 
 		bookList.add(this);
-
 	}
 
 	public String phone_format() {
@@ -48,11 +38,9 @@ public class Book {
 	}
 
 	private UUID makeUUID () {
-
 		UUID retUUID;
 		retUUID = UUID.randomUUID();
 		return  retUUID;
-
 	}
 
 	public static UUID getUUID(Date date1, String name1, String bookedPhoneNum1) {
@@ -62,6 +50,10 @@ public class Book {
 			}
 		}
 		return null;
+	}
+
+	public UUID getThisUUID() {
+		return this.uuid;
 	}
 
 	public static List<Book> getBookList() {
@@ -76,6 +68,4 @@ public class Book {
 	public int getRoomNumber() {
 		return roomNum;
 	}
-
-
 }

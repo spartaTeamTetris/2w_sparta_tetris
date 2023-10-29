@@ -6,11 +6,6 @@ public class Room {
 	private int roomNum;
 	private int roomPrice;
 	private RoomType roomType;
-
-
-
-
-
 	public Room (int roomNum1, int roomPrice1, RoomType roomType1) {
 
 		this.roomNum = roomNum1;
