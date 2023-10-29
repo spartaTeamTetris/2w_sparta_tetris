@@ -1,13 +1,18 @@
+import java.util.PrimitiveIterator;
+
 public class User {
 
 	private String userName;
 	private String phoneNumber;
 	private int Money;
 
-	public User (String userName1, String phoneNumber1, int Money1) {
+	private int ownNum;
+
+	public User (String userName1, String phoneNumber1, int Money1, int ownNum1) {
 		this.userName = userName1;
 		this.phoneNumber = phoneNumber1;
 		this.Money = Money1;
+		this.ownNum= ownNum1;
 	}
 
 	//폰번호 ( 000-0000-0000 출력 메서드 )
@@ -33,8 +38,9 @@ public class User {
 	}
 
 	public int getMoney() {	return Money; }
+	public int getOwnNum() {	return ownNum; }
 
 	public void setMoney(int money1) {
-		Money = money1;
+		Money += money1;
 	}
 }

@@ -1,8 +1,12 @@
 import java.util.*;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class Hotel {
 
 	private List<Room> rooms; //*
+
+	Book book;
 
 
 
@@ -10,7 +14,6 @@ public class Hotel {
 	final String name = "데일리 여기 어떤 비앤비 ~ ?";
 
 	// 예약 배열
-	static Map<Date, Book[][]> bookArray = new HashMap<>();
 	private
 
 
@@ -32,10 +35,12 @@ public class Hotel {
 
 //	Map<Date, > book
 
-	public Hotel() {
+	public Hotel () {
 		setData = new SetData();
 		setData.setData();
+
 	}
+
 
 	public List<Room> getRooms() {
 		return setData.getRooms();
@@ -62,9 +67,6 @@ public class Hotel {
 		// 감사합니다 팀장님 퇴근하셔도 됩니다!
 		return false;
 	}
-
-
-
 
 
 

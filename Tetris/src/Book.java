@@ -1,23 +1,41 @@
-import java.util.Date;
-import java.util.UUID;
+import java.security.PublicKey;
+import java.util.*;
 
 public class Book {
 
-	String name;
+
+	String userName;
 	String bookedPhoneNum;
-	Date date;
+
 	int roomNum;
+
+	Date date;
+
+	Room room;
+
 	UUID uuid;
 
-	int bookedNum;
 
-	public Book (String name1, String bookedPhoneNum1, int roomNum1, int bookedNum1) {
-		this.name = name1;
+
+	private static List<Book> bookList = new ArrayList<>();
+
+
+	// 1. 날짜
+	// 2. 사용자 이름
+	// 3. 사용자의 핸드폰 번호
+	// 4.
+
+
+	public Book (String bookedPhoneNum1, String userName1, int roomNum1, Date date1) {
+
+		this.userName = userName1;
 		this.bookedPhoneNum = bookedPhoneNum1;
 		this.roomNum = roomNum1;
-		this.bookedNum = bookedNum1;
+		this.uuid = makeUUID();
+		this.date = date1;
 
- 		this.uuid = UUID.randomUUID();
+		bookList.add(this);
+
 	}
 
 	public String phone_format() {
@@ -25,8 +43,39 @@ public class Book {
 		return this.bookedPhoneNum.replaceAll(regEx, "$1-$2-$3");
 	}
 
-	public String uuidToString (UUID uuid1) {
+	public String uuidToString (UUID uuid1 ) {
 		return uuid1.toString();
 	}
+
+	private UUID makeUUID () {
+
+		UUID retUUID;
+		retUUID = UUID.randomUUID();
+		return  retUUID;
+
+	}
+
+	public static UUID getUUID(Date date1, String name1, String bookedPhoneNum1) {
+		for (Book book : bookList) {
+			if (book.userName.equals(name1) && book.bookedPhoneNum.equals(bookedPhoneNum1) && book.date.equals(date1)) {
+					return book.uuid;
+			}
+		}
+		return null;
+	}
+
+	public static List<Book> getBookList() {
+		return bookList;
+	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
+	public int getRoomNumber() {
+		return roomNum;
+	}
+
 
 }

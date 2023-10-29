@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class Functions {
 
+	static Scanner scanner = new Scanner(System.in);
+
 	public static Date inputStringToDate () {
 
 		// scanner 를 갖고 있음.
@@ -13,14 +15,12 @@ public class Functions {
 		// 예외 처리 탑재
 		// return Date
 
-		Scanner scanner = new Scanner(System.in);
 		String date;
 		Date returnDate;
 
 		SimpleDateFormat format = new SimpleDateFormat("yyMMdd");
 		format.setLenient(false);
 		while (true) {
-			System.out.println('\n' + "날짜를 입력해주세요:");
 			date = scanner.nextLine();
 			try {
 				returnDate = format.parse(date);
@@ -30,6 +30,33 @@ public class Functions {
 			}
 		}
 	}
+
+	public static int inputStringToInt () {
+
+		// scanner 를 갖고 있음.
+		// Str -> Int
+		// 예외 처리 탑재
+		// return Int
+
+		String inputStr;
+		int returnInt;
+
+		while (true) {
+			inputStr = scanner.nextLine();
+			try {
+				returnInt = Integer.parseInt(inputStr);
+				if (0 < returnInt && returnInt < 100) {
+					return returnInt;
+				}
+				else
+					throw new NumberFormatException();
+			} catch (NumberFormatException e) {
+				System.out.println("범위 내의 숫자만 입력해주세요.");
+			}
+		}
+	}
+
+
 
 
 	// Date type을 String으로 변환
