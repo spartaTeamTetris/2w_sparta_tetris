@@ -29,21 +29,16 @@ public class HotelApp {
 					"1. 예약하기		2. 예약조회하기"
 				);
 
-		if(select == 1 ){
-			System.out.println("1. 예약하기");
-			makeReservation(userSelect());
-		}
-		if(select == 2) getMyReservation();
+		if(select == 1) makeReservation(userSelect());
+		if(select == 2) getMyReservation(userSelect());
 	}
 
 
 	// 유저를 선택합니다.
 	private int userSelect() {
-
 		System.out.println("사용하실 유저를 선택해주세요.");
 
 		int ownNum;
-
 		for (User user : hotel.setData.getUsers()) {
 			System.out.println( "번호: " + user.getOwnNum() +
 					" | 이름: " + user.getUserName() +
@@ -55,18 +50,14 @@ public class HotelApp {
 		return ownNum;
 	}
 
-	private void getMyReservation() {
+	private void getMyReservation(int ownNum) {
 		System.out.println("[ 예약 정보 ]");
 		System.out.println("예약 번호를 입력해주세요 : " );
+
+		scanner.nextLine();
 		String bookedNum = scanner.nextLine();
 
-		// 아래 코드에서 inputStringToDate()를 사용하면 예약 번호 입력이 되지 않는 문제 발생.
-		// 다른 scanner 객체를 이용해서 그런가..
-//		System.out.print("예약 날짜를 입력해주세요(ex 2023-10-10) : ");
-//		String date = scanner.nextLine();
-		Date date = Functions.inputStringToDate();
-
-		Book findBook = hotel.getBookWithUUID(date, bookedNum);
+		Book findBook = hotel.getBookWithUUID(bookedNum);
 		if(findBook == null) {
 			System.out.println("일치하는 예약 정보가 없습니다.");
 			return;
@@ -84,7 +75,7 @@ public class HotelApp {
 
 		if(select == 1) return;
 		if(select == 2) {
-			if(hotel.cancelBook(date, bookedNum)) System.out.println("예약이 취소되었습니다.");
+			if(hotel.cancelBook(bookedNum, ownNum)) System.out.println("예약이 취소되었습니다.");
 			else System.out.println("예약을 취소하지 못했습니다. 다시 시도해주세요.");
 		}
 	}
@@ -151,7 +142,6 @@ public class HotelApp {
 
 	}
 
-
 	/**
 	 * [makeSelect]
 	 * sIdx: 첫 선택지 번호
@@ -176,8 +166,6 @@ public class HotelApp {
 
 		return select;
 	}
-
-
 
 	private void makeBook(String userName, String userPhoneNum, int roomNum1, Date date1)
 	{
@@ -212,7 +200,6 @@ public class HotelApp {
 		return -1;
 	}
 
-
 	private String getUserNumber(int ownNum1) {
 
 		for (User user : hotel.setData.getUsers()) {
@@ -243,16 +230,13 @@ public class HotelApp {
 
 	// 그 방이 게스트의 숫자보다 수용인원이 높다면
 	private boolean isRoomAvailableAndSuitable(Room room, Date date, int guest) {
-
 		if (!checkBookOnDate(room.getRoomNum(), date)) {
-
 			return room.getCapacity() >= guest;
 		}
 		return false;
 	}
 
 	private boolean checkMoney (int ownNum, int roomNum) {
-
 		if ( getUserMoney(ownNum) < getPrice(roomNum)	) {
 			System.out.println("헉,,, 돈이 부족하네영");
 			return false;
