@@ -43,9 +43,9 @@ public class Book {
 		return  retUUID;
 	}
 
-	public static UUID getUUID(Date date1, String name1, String bookedPhoneNum1) {
+	public static UUID getUUID(Date date1, String name1, String bookedPhoneNum1, int roomNum) {
 		for (Book book : bookList) {
-			if (book.userName.equals(name1) && book.bookedPhoneNum.equals(bookedPhoneNum1) && book.date.equals(date1)) {
+			if (book.userName.equals(name1) && book.bookedPhoneNum.equals(bookedPhoneNum1) && book.date.equals(date1) && book.roomNum == roomNum) {
 					return book.uuid;
 			}
 		}
@@ -59,7 +59,6 @@ public class Book {
 	public static List<Book> getBookList() {
 		return bookList;
 	}
-
 
 	public Date getDate() {
 		return date;
