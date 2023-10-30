@@ -1,7 +1,4 @@
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.jar.JarEntry;
-import java.text.SimpleDateFormat;
 
 public class HotelApp {
 	private final Scanner scanner = new Scanner(System.in);
@@ -64,7 +61,10 @@ public class HotelApp {
 		}
 
 		System.out.println("[ 예약 내역 ]");
-		//TODO
+		System.out.println("예약자: " + findBook.userName);
+		System.out.println("예약일: " + findBook.date);
+		System.out.println("예약번호: " + findBook.uuid);
+		System.out.println("객실 정보: " + findBook.roomNum);
 
 		int select = makeSelect(
 				1,
@@ -135,7 +135,7 @@ public class HotelApp {
 
 		UUID retUUID;
 
-		retUUID= Book.getUUID (date, userName , userPhoneNum);
+		retUUID= Book.getUUID (date, userName , userPhoneNum, roomNum);
 
 		System.out.println("고객님의 예약 정보 UUID는 : " + retUUID );
 		System.out.println("예약이 완료되었습니다. 초기화면으로 돌아갑니다." + '\n');
@@ -262,5 +262,4 @@ public class HotelApp {
 		}
 
 	}
-
 }
