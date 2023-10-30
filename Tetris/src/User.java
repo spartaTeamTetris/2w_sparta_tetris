@@ -37,8 +37,12 @@ public class User {
 		this.phoneNumber = phoneNumber1;
 	}
 
-	public int getMoney() {	return Money; }
-	public int getOwnNum() {	return ownNum; }
+	public int getMoney() {
+		return Money;
+	}
+	public int getOwnNum() {
+		return ownNum;
+	}
 
 	public void setMoney(int money1) {
 		Money += money1;
