@@ -30,6 +30,20 @@ public class HotelApp {
 		if(select == 2) getMyReservation(userSelect());
 	}
 
+	private void adminScreen() {
+		while(true) {
+			int select = makeSelect(
+					1,
+					3,
+					"[ 선택하세요 ]",
+					"1. 호텔 정보 조회		2. 예약 현황 조회		3. 뒤로가기"
+			);
+
+			if(select == 1) showHotelInformation();
+			if(select == 2) showAllReservation();
+			if(select == 3) break;
+		}
+	}
 
 	// 유저를 선택합니다.
 	private int userSelect() {
@@ -56,7 +70,7 @@ public class HotelApp {
 
 		Book findBook = hotel.getBookWithUUID(bookedNum);
 		if(findBook == null) {
-			System.out.println("일치하는 예약 정보가 없습니다.");
+			System.out.println("일치하는 예약 정보가 없습니다\n");
 			return;
 		}
 
@@ -80,66 +94,57 @@ public class HotelApp {
 		}
 	}
 
-	private void adminScreen() {
-		/**
-		 * 전체예약조회()
-		 * 호텔 현재 상황 조회
-		 * */
+
+	private void showHotelInformation() {
+		System.out.println("호텔 보유 자금: " + hotel.getAsset() + "\n");
+	}
+
+	private void showAllReservation() {
+		System.out.println("호텔 예약 현황");
+
+		List<Book> bookList = Book.getBookList();
+		for (Book book : bookList) {
+			System.out.println("[예약일] " + book.date + " [방번호]: " + book.roomNum + " [예약번호] " + book.uuid);
+		}
 	}
 
 	//ownNum을 통해 해당 유저의 데이터를 들고감
 	public void makeReservation(int ownNum) {
 		System.out.println("예약하기");
 		System.out.println("예약을 원하는 날짜를 입력해주세요 ex (20240229)");
-
 		Date date = Functions.inputStringToDate();
 
 		System.out.println("숙박 인원을 입력해주세요 ( 최대 8인 )");
-
 		int guest = Functions.inputStringToInt();
-
 		scanner.nextLine();
 
 		showMatchRoom(guest, date);
 
 		//예외 처리로 5명 로직
-
 		// Hotel.showUnoccupiedRooms(date);
 
-		System.out.println("예약을 원하는 방 번호를 입력해주세요.");
-
 		// int 예약하고 싶은 방 넣기 int type
-
+		System.out.println("예약을 원하는 방 번호를 입력해주세요.");
 		int roomNum = Functions.inputStringToInt();
 
 		//예약 가능한 방 출력
-
 		payMoney (ownNum, getPrice(roomNum));
-
-		// 이름 번호,
+		//Hotel 돈 늘려주는 method
 
 		if (!checkMoney(ownNum, roomNum)) {
 			return; // 돈이 부족하면 메서드를 종료합니다.
 		}
 
 		String userName = getUserName(ownNum);
-
-
 		String userPhoneNum = getUserNumber(ownNum);
-
-
-
 		makeBook(userName, userPhoneNum, roomNum, date);
 
 		// HOTEL.예약하기 return UUID
-
 		UUID retUUID;
-
 		retUUID= Book.getUUID (date, userName , userPhoneNum, roomNum);
 
 		System.out.println("고객님의 예약 정보 UUID는 : " + retUUID );
 		System.out.println("예약이 완료되었습니다. 초기화면으로 돌아갑니다." + '\n');
-
 	}
 
 	/**
@@ -153,7 +158,7 @@ public class HotelApp {
 		int select;
 		while(true) {
 			System.out.println(title);
-			System.out.println(option + "\n");
+			System.out.println(option);
 
 			try {
 				select = scanner.nextInt();
@@ -164,6 +169,7 @@ public class HotelApp {
 			}
 		}
 
+		System.out.println();
 		return select;
 	}
 
@@ -255,11 +261,11 @@ public class HotelApp {
 	}
 
 	private void payMoney (int ownNum, int roomPrice) {
-
 		for (User user : SetData.getUsers()) {
 			if (user.getOwnNum() == ownNum)
 				user.setMoney((roomPrice) * -1);
 		}
 
+		hotel.setAsset(hotel.getAsset() + roomPrice);
 	}
 }

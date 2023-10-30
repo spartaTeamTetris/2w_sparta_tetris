@@ -1,13 +1,10 @@
 import java.util.*;
 
 public class Hotel {
-	final SetData setData;
-
-// 	예약 배열
-//	private final Map<Date, Book[][]> bookArray = new HashMap<>();
+	private long asset = 1_000_000_000L;
+	public final SetData setData = new SetData();
 
 	public Hotel() {
-		setData = new SetData();
 		setData.setData();
 	}
 
@@ -54,10 +51,9 @@ public class Hotel {
 				if(rooms.get(i).getRoomNum() == roomNumber) {
 					for (User user : SetData.getUsers()) {
 						if(user.getOwnNum() == ownNum) {
-							//user money 올려주고
-							user.setMoney(rooms.get(i).getRoomPrice());
-							//hotel 예산 내리고
-							//TODO
+							int roomPrice = rooms.get(i).getRoomPrice();
+							user.setMoney(roomPrice);
+							this.setAsset(this.getAsset() - roomPrice);
 						}
 					}
 				}
@@ -66,5 +62,12 @@ public class Hotel {
 			bookList.remove(idx);
 			return true;
 		}
+	}
+
+	public long getAsset() {
+		return asset;
+	}
+	public void setAsset(long asset) {
+		this.asset = asset;
 	}
 }
